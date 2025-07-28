@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KalaVaban</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #dedde2;
+      line-height: 1.6;
+    }
+
+    /* Header Styles */
+    header {
+      background-color: #cdbeef;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      color: #374151;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-menu a:hover {
+      color: #1f2937;
+    }
+
+    .cart-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      border: none;
+      color: #374151;
+      cursor: pointer;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .cart-btn:hover {
+      color: #1f2937;
+    }
+
+    .book-btn {
+      background-color: #374151;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .book-btn:hover {
+      background-color: #1f2937;
+    }
+
+    /* Mobile Menu */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    .mobile-menu.active {
+      display: block;
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 12px 0;
+      text-decoration: none;
+      color: #374151;
+      border-bottom: 1px solid #f7f7f4;
+    }
+
+    /* About Me Section */
+    .about-section{
+      padding: 80px 0;
+      background-color: #ebf0de;
+    }
+
+    .about-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-text h2 {
+      font-size: 48px;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 32px;
+    }
+
+    .about-text p {
+      font-size: 18px;
+      color: #374151;
+      line-height: 1.8;
+      font-style: italic;
+    }
+
+    .about-image {
+      display: flex;
+      justify-content: center;
+    }
+
+    .artist-photo {
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Featured Products Section */
+    .featured-section {
+      padding: 80px 0;
+      background-color: #f5f5f5;
+    }
+
+    .featured-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .featured-title {
+      font-size: 48px;
+      font-weight: 700;
+      text-align: center;
+      color: #1f2937;
+      margin-bottom: 60px;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    .product-card {
+      padding-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 300px;
+      border-radius: 20px;
+      object-fit: cover;
+      padding: 20px;
+      /* padding-top: 30px; */
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .product-image {
+      transform: scale(1.05);
+    }
+
+    .product-info {
+      padding-bottom: 20px;
+      text-align: center;
+    }
+
+    .product-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 8px;
+    }
+
+    .product-price {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .buy {
+      width: 200px;
+      background-color: #374151;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      margin-top: 16px;
+    }
+    .shop-all-btn {
+      display: block;
+      margin: 0 auto;
+      background-color: #374151;
+      color: white;
+      padding: 16px 48px;
+      border: none;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .shop-all-btn:hover {
+      background-color: #1f2937;
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    footer {
+      background-color: #1f2937;
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .footer-title {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .footer-description {
+      color: #d1d5db;
+      margin-bottom: 24px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .footer-links a {
+      color: #d1d5db;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #374151;
+      padding-top: 24px;
+      margin-top: 24px;
+    }
+
+    .footer-bottom p {
+      color: #9ca3af;
+      font-size: 14px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .about-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+      }
+
+      .about-text h2 {
+        font-size: 36px;
+      }
+
+      .artist-photo {
+        width: 300px;
+        height: 300px;
+      }
+
+      .featured-title {
+        font-size: 36px;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .footer-links {
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-container {
+        padding: 0 16px;
+      }
+
+      .about-text h2 {
+        font-size: 28px;
+      }
+
+      .about-text p {
+        font-size: 16px;
+      }
+
+      .featured-title {
+        font-size: 28px;
+      }
+
+      .artist-photo {
+        width: 250px;
+        height: 250px;
+      }
+    }
+
+    /* Cart Icon */
+    .cart-icon {
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <div class="logo"> KalaVaban The Art Of Spritual Strocks </div>
+
+      <nav class="nav-menu">
+        <a href="#services">Services</a>
+        <a href="#shop">Shop</a>
+        <a href="#course">Course</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <button class="cart-btn">
+          <svg class="cart-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6H19"></path>
+          </svg>
+          Cart
+        </button>
+        <button class="book-btn">Book now</button>
+      </nav>
+
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="#services">Services</a>
+        <a href="#shop">Shop</a>
+        <a href="#course">Course</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#cart">Cart</a>
+        <button class="book-btn" style="width: 100%; margin-top: 16px;">Book now</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- About Me Section -->
+  <section class="about-section" id="about">
+    <div class="about-container">
+      <div class="about-text">
+        <h2>About Me</h2>
+        <p>
+I am a passionate and expressive visual artist rooted in the rich traditions of Indian art. With a strong foundation in painting, sketching, and visual storytelling, I draw inspiration from nature, emotions, mythology, and the rhythms of everyday life.
+
+I am a seeker of color, texture, and symbolism—blending them to craft soulful narratives that transcend the canvas. My work is a reflection of devotion, spirit, and identity, inviting viewers into a world where culture and creativity converge.
+
+I am constantly evolving—exploring new techniques, mediums, and perspectives. Through exhibitions, digital platforms, and collaborative journeys, I continue to share my artistic voice and connect with those who find meaning in every stroke and story..
+        </p>
+      </div>
+      <div class="about-image">
+        <img src="../photos/about me.jpg" alt="Artist standing in front of colorful mural" class="artist-photo">
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products Section -->
+  <section class="featured-section" id="featured">
+    <div class="featured-container">
+      <h2 class="featured-title">Welcome To My Exhibition</h2>
+
+      <div class="products-grid">
+        <div class="product-card">
+          <img src="../photos/First_product.jpg" alt="Mahisasuramardini - Hindu goddess painting with trident"
+            class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Mahisasuramardini</h3>
+            <p class="product-price">₹2000.00</p>
+          </div>
+          <button class="buy">Buy</button>
+          
+        </div>
+
+        <div class="product-card">
+          <img src="../photos/Product 2.jpg" alt="Makhan Chor" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Makhan Chor</h3>
+            <p class="product-price">₹1000.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 28.jpg" alt="Arnapurna" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Arnapurnna</h3>
+            <p class="product-price">₹2000.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 4.jpg" alt="Yasoda Maa" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Yasoda Maa</h3>
+            <p class="product-price">₹2000.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 11.jpg" alt="Ma Durga" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Ma Durga</h3>
+            <p class="product-price">₹1000.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 9.jpg" alt="Little Gnash" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Little Ganash</h3>
+            <p class="product-price">₹1000.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 7.jpg" alt="Radha Krishna" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Radha Krishna</h3>
+            <p class="product-price">₹1000.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/Drawing (muni rishi).jpg" alt="Rishi & Apsara" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Rishi & Apsara</h3>
+            <p class="product-price">₹800.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 17.jpg" alt="Trinayani" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Trinayani</h3>
+            <p class="product-price">₹800.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 22.jpg" alt="Sidhidata" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Sidhidata</h3>
+            <p class="product-price">₹500.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 18.jpg" alt="Ma Kali" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Ma Kali</h3>
+            <p class="product-price">₹800.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 21.jpg" alt="Devi Rudrani" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Devi Rudrani</h3>
+            <p class="product-price">₹500.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 26.jpg" alt="Maa o Chele" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Maa o Chele</h3>
+            <p class="product-price">₹500.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 15.jpg" alt="Satyajit Roy" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Satyajit Roy</h3>
+            <p class="product-price">₹500.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 23.jpg" alt="Netaji" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Netaji</h3>
+            <p class="product-price">₹500.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 10.jpg" alt="Divine Beauty" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Divine Beauty</h3>
+            <p class="product-price">₹500.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 14.jpg" alt="Sakuntala" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Sakuntala</h3>
+            <p class="product-price">₹300.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 12.jpg" alt=" Lord Shiva" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Lord Shiva</h3>
+            <p class="product-price">₹500.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 24.jpg" alt="Maha Prabhu" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Maha Prabhu</h3>
+            <p class="product-price">₹500.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 19.jpg" alt="Divine Love" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Divine Love</h3>
+            <p class="product-price">₹500.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 8.jpg" alt="Binapani" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Binapani</h3>
+            <p class="product-price">₹300.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 16.jpg" alt="Saraswati" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Saraswati</h3>
+            <p class="product-price">₹500.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 13.jpg" alt="Charkha To Code" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Charkha To Code</h3>
+            <p class="product-price">₹700.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 27.jpg" alt="Goutam Budha" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Goutam Budha</h3>
+            <p class="product-price">₹500.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 5.jpg" alt="Natkhat Lal" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Natkhat Lal</h3>
+            <p class="product-price">₹500.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product 6.jpg" alt="Maa" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Maa</h3>
+            <p class="product-price">₹500.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        <div class="product-card">
+          <img src="../photos/product20.jpg" alt="Nil Madhav" class="product-image">
+          <div class="product-info">
+            <h3 class="product-title">Nil Madhav</h3>
+            <p class="product-price">₹500.00</p>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+        
+
+      
+
+    <button class="shop-all-btn">SHOP ALL</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <h3 class="footer-title">KalaVaban The Art Of Spritual Strocks</h3>
+      <p class="footer-description">
+        Creating unique and expressive artworks that tell powerful stories
+      </p>
+      <div class="footer-links">
+        <a href="#services">Services</a>
+        <a href="#shop">Shop</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 The Art Gallery. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileMenu() {
+      const mobileMenu = document.getElementById('mobileMenu');
+      mobileMenu.classList.toggle('active');
+    }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function (event) {
+      const mobileMenu = document.getElementById('mobileMenu');
+      const menuBtn = document.querySelector('.mobile-menu-btn');
+
+      if (!mobileMenu.contains(event.target) && !menuBtn.contains(event.target)) {
+        mobileMenu.classList.remove('active');
+      }
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
